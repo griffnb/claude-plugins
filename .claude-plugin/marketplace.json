@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "compound-engineering",
+      "name": "backend",
       "description": "AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last. Includes 27 specialized agents, 20 commands, and 12 skills.",
       "version": "2.21.0",
       "author": {
@@ -19,8 +19,8 @@
         "email": "contact@griffithlabs.com"
       },
       "homepage": "https://github.com/griffnb/compound-engineering-plugin",
-      "tags": ["ai-powered", "compound-engineering", "workflow-automation", "code-review", "quality", "knowledge-management", "image-generation"],
-      "source": "./plugins/compound-engineering"
+      "tags": [],
+      "source": "./plugins/backend"
     }    
   ]
 }
