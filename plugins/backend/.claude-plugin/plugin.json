@@ -1,7 +1,7 @@
 {
   "name": "compound-engineering",
-  "version": "2.22.0",
-  "description": "AI-powered development tools. 27 agents, 20 commands, 13 skills, 2 MCP servers for code review, research, design, and workflow automation.",
+  "version": "2.23.0",
+  "description": "AI-powered development tools with session learning capture. 6 agents, 3 commands, 9 skills, 1 hook, 2 MCP servers for code review, workflow automation, and meta-learning.",
       "author": {
         "name": "Griffith Labs",
         "url": "https://github.com/griffnb",

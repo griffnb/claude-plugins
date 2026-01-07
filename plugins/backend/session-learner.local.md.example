@@ -1,0 +1,281 @@
+---
+skills_path: ".claude/skills/"
+quality_threshold: true
+auto_stage: true
+dry_run: false
+---
+
+# Session Learner Configuration
+
+This file configures the session-learner functionality that automatically captures learnings from development sessions.
+
+## Configuration Options
+
+### skills_path
+
+**Type:** String (path)
+**Default:** `.claude/skills/`
+**Description:** Directory where captured skills will be saved.
+
+**Examples:**
+```yaml
+skills_path: ".claude/skills/"           # Project-local (recommended)
+skills_path: "~/shared-skills/"          # Shared across projects
+skills_path: "./docs/learnings/"         # Custom location
+```
+
+**Recommendation:** Use `.claude/skills/` to keep learnings with the project.
+
+### quality_threshold
+
+**Type:** Boolean
+**Default:** `true`
+**Description:** Skip sessions that don't meet minimum quality criteria.
+
+**When enabled:**
+- Skips sessions with <5 tool calls
+- Skips sessions <2 minutes
+- Skips purely conversational sessions
+- Skips trivial operations (typo fixes, doc reads)
+
+**When disabled:**
+- Analyzes every session regardless of activity level
+- May create skills for trivial sessions
+- More noise, less signal
+
+**Recommendation:** Keep enabled to maintain high-quality skill library.
+
+### auto_stage
+
+**Type:** Boolean
+**Default:** `true`
+**Description:** Automatically stage skill files with `git add` for PR inclusion.
+
+**When enabled:**
+- Runs `git add {skills_path}/*` after creating skills
+- Skills automatically included in next commit
+- Works seamlessly with PR workflow
+
+**When disabled:**
+- Skills created but not staged
+- Must manually `git add` skills before committing
+- Gives explicit control over what's included
+
+**Recommendation:** Keep enabled for automatic PR inclusion.
+
+### dry_run
+
+**Type:** Boolean
+**Default:** `false`
+**Description:** Preview mode - show what would be created without actually creating files.
+
+**When enabled:**
+- Analyzes sessions normally
+- Shows skill previews
+- Does NOT write files
+- Does NOT stage changes
+- Useful for testing
+
+**When disabled:**
+- Normal operation - creates and stages skills
+
+**Recommendation:** Set `true` temporarily to test behavior, otherwise keep `false`.
+
+## Usage
+
+### Installation
+
+1. Copy this file to your project's `.claude/` directory:
+   ```bash
+   cp session-learner.local.md.example .claude/session-learner.local.md
+   ```
+
+2. Customize the settings in `.claude/session-learner.local.md`
+
+3. Add to `.gitignore` if you want project-specific settings:
+   ```
+   .claude/*.local.md
+   ```
+
+   Or commit it if you want team-wide settings.
+
+### Per-Project Configuration
+
+You can have different settings per project by maintaining different `.claude/session-learner.local.md` files in each project directory.
+
+**Example:**
+
+**Project A (.claude/session-learner.local.md):**
+```yaml
+---
+skills_path: ".claude/skills/"
+quality_threshold: true
+auto_stage: true
+---
+```
+
+**Project B (.claude/session-learner.local.md):**
+```yaml
+---
+skills_path: "docs/learnings/"
+quality_threshold: false
+auto_stage: false
+---
+```
+
+## How It Works
+
+### SessionEnd Hook
+
+When a session ends, the SessionEnd hook:
+1. Reads this configuration file (if it exists)
+2. Applies quality threshold check
+3. Invokes learning-analyzer agent if session meets criteria
+4. Agent creates/updates skills in configured location
+5. Stages changes if auto_stage enabled
+
+### Manual Commands
+
+When using `/capture-learning` or `/review-session`:
+1. Commands read this configuration file
+2. Settings apply to manual analysis
+3. Except: `/review-session` always runs in dry_run mode
+
+## Configuration Precedence
+
+1. **`.claude/session-learner.local.md`** in project directory (highest priority)
+2. **Default values** if no config file found
+
+## Example Configurations
+
+### Conservative (High Quality Bar)
+
+```yaml
+---
+skills_path: ".claude/skills/"
+quality_threshold: true
+auto_stage: true
+dry_run: false
+---
+```
+
+Only captures high-quality learnings, automatically includes in PRs.
+
+### Testing Mode
+
+```yaml
+---
+skills_path: ".claude/skills/"
+quality_threshold: false
+auto_stage: false
+dry_run: true
+---
+```
+
+Previews everything without creating files - good for testing.
+
+### Manual Control
+
+```yaml
+---
+skills_path: ".claude/skills/"
+quality_threshold: true
+auto_stage: false
+dry_run: false
+---
+```
+
+Creates skills but doesn't auto-stage - you decide what to commit.
+
+### Shared Team Knowledge Base
+
+```yaml
+---
+skills_path: "~/team-knowledge/"
+quality_threshold: true
+auto_stage: false
+dry_run: false
+---
+```
+
+Saves to shared directory outside project, no auto-staging.
+
+## Troubleshooting
+
+### Skills not being created
+
+**Check:**
+1. Quality threshold might be filtering session
+2. Try setting `quality_threshold: false` temporarily
+3. Run `/review-session` to see analysis
+
+### Skills in wrong location
+
+**Fix:**
+1. Check `skills_path` setting
+2. Ensure path exists or can be created
+3. Use absolute path if relative path issues
+
+### Changes not staged
+
+**Check:**
+1. `auto_stage` setting - might be `false`
+2. Git repository initialized?
+3. Check git status manually: `git status`
+
+### Want to test without creating files
+
+**Solution:**
+1. Set `dry_run: true`
+2. Run session or `/capture-learning`
+3. Review output
+4. Set `dry_run: false` when ready
+
+## Additional Information
+
+### .gitignore Recommendations
+
+**Option 1: Keep settings private**
+```
+# .gitignore
+.claude/*.local.md
+```
+
+Each developer has own configuration.
+
+**Option 2: Share team settings**
+```
+# .gitignore
+# (don't ignore session-learner.local.md)
+```
+
+Commit config for team-wide consistency.
+
+### Skills Directory
+
+Remember to create the skills directory if it doesn't exist:
+```bash
+mkdir -p .claude/skills
+```
+
+The learning-analyzer agent will create it automatically if needed, but you can prepare it in advance.
+
+### Git Setup
+
+If you want skills included in your PRs, ensure `.claude/skills/` is not in `.gitignore`:
+
+```
+# .gitignore - don't add this line
+# .claude/skills/  ← DO NOT ignore if you want skills in PRs
+```
+
+## See Also
+
+- `/capture-learning` - Manually capture learnings
+- `/review-session` - Preview what would be captured
+- `learning-analyzer` agent - The agent that does the analysis
+- `meta-learning` skill - Guidelines for identifying valuable learnings
+
+---
+
+*This is an example configuration file. Copy it to `.claude/session-learner.local.md` and customize for your needs.*
