@@ -1,0 +1,26 @@
+{
+  "name": "claude-plugins",
+  "owner": {
+    "name": "Griffith Labs",
+    "url": "https://github.com/griffnb"
+  },
+  "metadata": {
+    "description": "A collection of Claude plugins developed by Griffith Labs.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "compound-engineering",
+      "description": "AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last. Includes 27 specialized agents, 20 commands, and 12 skills.",
+      "version": "2.21.0",
+      "author": {
+        "name": "Griffith Labs",
+        "url": "https://github.com/griffnb",
+        "email": "contact@griffithlabs.com"
+      },
+      "homepage": "https://github.com/griffnb/compound-engineering-plugin",
+      "tags": ["ai-powered", "compound-engineering", "workflow-automation", "code-review", "quality", "knowledge-management", "image-generation"],
+      "source": "./plugins/compound-engineering"
+    }    
+  ]
+}
