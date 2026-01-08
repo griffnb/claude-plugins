@@ -43,7 +43,7 @@ For each component, the reviewing agent should:
 2. **Apply best practices** specific to that component type:
    - **Agents**: System prompt clarity, tool access, triggering conditions, examples
    - **Commands**: Clear frontmatter, argument handling, execution patterns
-   - **Skills**: Progressive disclosure, clear structure, YAML frontmatter
+   - **Skills**: Progressive disclosure, clear structure, YAML frontmatter, move examples to reference files
    - **Hooks**: Event handling, validation patterns, prompt-based hooks API
 3. **Suggest improvements** or apply them directly
 4. **Check for consistency** with Claude Code documentation
