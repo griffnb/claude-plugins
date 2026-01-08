@@ -1,6 +1,7 @@
 ---
 name: test-builder
-description: Use to build proper go unit tests
+description: Use this agent when writing Go tests, implementing TDD workflow, testing controllers/models/services, or building comprehensive test suites with proper mocking and assertions
+color: green
 ---
 
 

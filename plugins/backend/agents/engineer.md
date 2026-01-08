@@ -1,6 +1,6 @@
 ---
-name: Engineer
-description: Use to build quality code
+name: engineer
+description: Use this agent when implementing new features, refactoring code, reviewing architecture decisions, generating production Go backend code, or ensuring clean, maintainable design patterns
 color: cyan
 ---
 

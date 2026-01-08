@@ -1,3 +1,8 @@
+---
+name: new-go-object
+description: Create a new Go model with controller, following project conventions for models, controllers, and routing
+argument-hint: "[model name]"
+---
 
 ## Creating an object
 I want you to study the instructions at `./docs/MODELS.md`

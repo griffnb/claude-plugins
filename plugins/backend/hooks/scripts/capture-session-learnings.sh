@@ -69,7 +69,7 @@ Instructions:
 3. Identify valuable learnings (debugging patterns, architecture decisions, gotchas discovered)
 4. Apply quality threshold: skip if session was trivial (just typo fixes, reading docs, no problem-solving)
 5. Use smart merge: update existing skills in $skills_path or create new ones
-6. Stage changes with git add for PR inclusion
+6. If not run manually, stage changes with git add for PR inclusion
 7. Provide brief summary of what was captured
 
 Configuration:
